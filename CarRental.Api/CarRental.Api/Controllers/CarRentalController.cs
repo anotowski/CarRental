@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using CarRental.Api.Models;
+using CarRental.Api.Models.Responses;
 using CarRental.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,18 +13,27 @@ namespace CarRental.Api.Controllers
     public class CarRentalController : ControllerBase
     {
         private readonly ICarRentalService _carRentalService;
+        private readonly IMapper _mapper;
 
-        public CarRentalController(ICarRentalService carRentalService)
+        public CarRentalController(ICarRentalService carRentalService,
+            IMapper mapper)
         {
             _carRentalService = carRentalService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        [Route("list", Name = "ListAll")]
+        public async Task<IActionResult> ListAll()
         {
-            var carDtos = await _carRentalService.ListCars();
+            var availableCarsDto = await _carRentalService.ListCars();
 
-            return Ok(carDtos);
+            return Ok(_mapper.Map<List<CarInformationResponse>>(availableCarsDto));
+        }
+
+        public async Task<IActionResult> BookCar()
+        {
+
         }
     }
 }

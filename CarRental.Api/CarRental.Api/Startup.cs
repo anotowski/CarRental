@@ -1,4 +1,6 @@
+using AutoMapper;
 using CarRental.Api.DependencyInjection;
+using CarRental.Api.Profiles;
 using CarRental.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,16 +26,20 @@ namespace CarRental.Api
 
             services.AddDbContext<CarRentalContext>();
             services.AddCarRentalServices();
+            services.AddExternalTools();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
