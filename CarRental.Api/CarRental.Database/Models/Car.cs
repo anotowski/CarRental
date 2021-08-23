@@ -29,6 +29,9 @@ namespace CarRental.Database.Models
         [Column(TypeName = "decimal(18, 2")]
         public decimal KilometerFee { get; set; }
 
+        [Required]
+        public int CurrentMileage { get; set; }
+
         public ICollection<RentalHistory> RentalHistories { get; set; } 
     }
 }

@@ -15,11 +15,22 @@ namespace CarRental.Database.Repositories
             _carRentalContext = carRentalContext;
         }
 
-        public async Task<List<Car>> GetAllCarsList()
+        public Task<List<Car>> GetAllCarsList()
         {
-            return await _carRentalContext.Cars
-                .Include(x => x.RentalHistories)
+            return _carRentalContext.Cars
                 .ToListAsync();
+        }
+
+        public Task<Car> GetCarByPlateNumber(string plateNumber)
+        {
+            return _carRentalContext.Cars
+                .Include(x => x.RentalHistories)
+                .FirstOrDefaultAsync(x => x.PlateNumber.Equals(plateNumber));
+        }
+
+        public async Task AddRentalHistory()
+        {
+
         }
     }
 }

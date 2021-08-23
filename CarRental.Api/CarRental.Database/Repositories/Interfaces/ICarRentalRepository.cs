@@ -7,5 +7,7 @@ namespace CarRental.Database.Repositories.Interfaces
     public interface ICarRentalRepository
     {
         Task<List<Car>> GetAllCarsList();
+
+        Task<Car> GetCarByPlateNumber(string plateNumber);
     }
 }

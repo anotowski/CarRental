@@ -16,9 +16,9 @@ namespace CarRental.Database.Models
 
         public DateTime? RentEndDate { get; set; }
 
-        public int MilageOnRentalStart { get; set; }
+        public int MileageOnRentalStart { get; set; }
 
-        public int? MilageOnRentalEnd { get; set; }
+        public int? MileageOnRentalEnd { get; set; }
 
         public Customer Customer { get; set; }
     }

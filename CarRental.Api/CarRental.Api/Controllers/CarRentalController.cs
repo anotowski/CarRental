@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using CarRental.Api.Models;
+using CarRental.Api.Models.Requests;
 using CarRental.Api.Models.Responses;
 using CarRental.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +31,9 @@ namespace CarRental.Api.Controllers
             return Ok(_mapper.Map<List<CarInformationResponse>>(availableCarsDto));
         }
 
-        public async Task<IActionResult> BookCar()
+        [HttpPost]
+        [Route("rent", Name = "Rent")]
+        public async Task<IActionResult> RentCar([FromBody] RentRequest rentRequest)
         {
 
         }

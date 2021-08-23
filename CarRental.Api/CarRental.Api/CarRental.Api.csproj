@@ -21,9 +21,5 @@
     <ProjectReference Include="..\CarRental.Services\CarRental.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Requests\" />
-  </ItemGroup>
-
 
 </Project>

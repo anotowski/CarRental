@@ -25,6 +25,10 @@ namespace CarRental.Database
                 .HasIndex(c => c.PlateNumber)
                 .IsUnique();
 
+            modelBuilder.Entity<Customer>()
+                .HasIndex(x => x.Email)
+                .IsUnique();
+
             modelBuilder.Entity<Car>()
                 .HasData(
                     new Car
@@ -37,6 +41,7 @@ namespace CarRental.Database
                         BaseDayRentalFee = 120m,
                         KilometerFee = 5m,
                         PlateNumber = "CarRental001",
+                        CurrentMileage = 0,
                     },
                     new Car
                     {
@@ -48,6 +53,7 @@ namespace CarRental.Database
                         BaseDayRentalFee = 125m,
                         KilometerFee = 5.65m,
                         PlateNumber = "CarRental002",
+                        CurrentMileage = 0,
                     },
                     new Car
                     {
@@ -59,6 +65,7 @@ namespace CarRental.Database
                         BaseDayRentalFee = 55m,
                         KilometerFee = 3.99m,
                         PlateNumber = "CarRental003",
+                        CurrentMileage = 0,
                     },
                     new Car
                     {
@@ -70,6 +77,7 @@ namespace CarRental.Database
                         BaseDayRentalFee = 68.99m,
                         KilometerFee = 3m,
                         PlateNumber = "CarRental004",
+                        CurrentMileage = 0
                     }
                 );
         }
