@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarRental.BusinessLogic\CarRental.Application.Dto.csproj" />
     <ProjectReference Include="..\CarRental.Database\CarRental.Database.csproj" />
   </ItemGroup>
 
