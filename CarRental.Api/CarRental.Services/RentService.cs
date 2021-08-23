@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using CarRental.BusinessLogic.Generators.Interfaces;
 using CarRental.Database.Models;
 using CarRental.Database.Repositories.Interfaces;
 using CarRental.Services.Interfaces;
@@ -37,17 +39,26 @@ namespace CarRental.Services
                 throw new InvalidOperationException($"Given car with plate number: '{plateNumber}' is not available.");
             }
 
-            var customer = await _customerRepository.GetCustomerByEmail(customerEmail);
+            var customer = await _customerRepository.GetOrCreateCustomer(customerEmail, customerDateOfBirth);
 
-            if (customer == null)
-            {
-                await _customerRepository.CreateCustomer(customerEmail, customerDateOfBirth);
-            }
+            var lastExistingRentalHistory = car.RentalHistories.OrderByDescending(x => x.Id).FirstOrDefault();
 
             var rentalHistory = new RentalHistory()
             {
-                BookingNumber = 
-            }
+                BookingNumber = _bookingNumberGenerator.Generate(plateNumber),
+                CarId = car.Id,
+                Customer = customer,
+                MileageOnRentalStart = lastExistingRentalHistory?.MileageOnRentalEnd ?? 1,
+                MileageOnRentalEnd = null,
+                RentStartDate = DateTime.UtcNow,
+                RentEndDate = null
+            };
+
+            await _carRentalRepository.AddRentalHistory(rentalHistory);
+            car.IsAvailable = false;
+
+            await _carRentalRepository.UpdateCarStatus(car);
+            return rentalHistory.BookingNumber;
         }
 
         private void ValidateInputParameters(string plateNumber, string customerEmail, DateTime customerDateOfBirth)
@@ -62,7 +73,7 @@ namespace CarRental.Services
                 throw new ArgumentNullException(nameof(customerEmail));
             }
 
-            if (customerDateOfBirth < DateTime.UtcNow.AddYears(-99))
+            if (customerDateOfBirth < DateTime.UtcNow.AddYears(-99) || customerDateOfBirth > DateTime.UtcNow)
             {
                 throw new InvalidOperationException($"Given customer date of birth '{customerDateOfBirth}' is out of range.");
             }

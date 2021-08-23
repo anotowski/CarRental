@@ -14,7 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarRental.Application.Dto\CarRental.Application.Dto.csproj" />
+    <ProjectReference Include="..\CarRental.BusinessLogic\CarRental.BusinessLogic.csproj" />
     <ProjectReference Include="..\CarRental.Database\CarRental.Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Managers\Interfaces\" />
   </ItemGroup>
 
 </Project>

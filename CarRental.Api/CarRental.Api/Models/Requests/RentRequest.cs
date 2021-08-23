@@ -6,9 +6,7 @@ namespace CarRental.Api.Models.Requests
     {
         public string CarPlateNumber { get; set; }
 
-        public string CustomerGivenName { get; set; }
-
-        public string CustomerFamilyName { get; set; }
+        public string CustomerEmail { get; set; }
 
         public DateTime CustomerDateOfBirth { get; set; }
     }

@@ -9,5 +9,9 @@ namespace CarRental.Database.Repositories.Interfaces
         Task<List<Car>> GetAllCarsList();
 
         Task<Car> GetCarByPlateNumber(string plateNumber);
+
+        Task AddRentalHistory(RentalHistory rentalHistory);
+
+        Task UpdateCarStatus(Car car);
     }
 }

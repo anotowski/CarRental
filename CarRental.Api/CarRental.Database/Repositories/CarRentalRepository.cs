@@ -28,9 +28,16 @@ namespace CarRental.Database.Repositories
                 .FirstOrDefaultAsync(x => x.PlateNumber.Equals(plateNumber));
         }
 
-        public async Task AddRentalHistory()
+        public async Task AddRentalHistory(RentalHistory rentalHistory)
         {
+            await _carRentalContext.AddAsync(rentalHistory);
+            await _carRentalContext.SaveChangesAsync();
+        }
 
+        public async Task UpdateCarStatus(Car car)
+        {
+            _carRentalContext.Update(car);
+            await _carRentalContext.SaveChangesAsync();
         }
     }
 }

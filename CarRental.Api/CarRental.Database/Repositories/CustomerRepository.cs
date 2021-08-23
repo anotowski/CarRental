@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CarRental.Database.Models;
+using CarRental.Database.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarRental.Database.Repositories
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly CarRentalContext _carRentalContext;
 
@@ -20,19 +21,23 @@ namespace CarRental.Database.Repositories
                 .FirstOrDefaultAsync(x => x.Email.Equals(customerEmail));
         }
 
-        public async Task<Customer> CreateCustomer(string email, DateTime birthDate)
+        public async Task<Customer> GetOrCreateCustomer(string email, DateTime birthDate)
         {
-            var mewCustomer = new Customer()
+            var customer = await _carRentalContext.Customers
+                .FirstOrDefaultAsync(x => x.Email.Equals(email));
+
+            if (customer == null)
             {
-                BirthDate = birthDate,
-                Email = email
-            };
+                customer = new Customer()
+                {
+                    BirthDate = birthDate,
+                    Email = email
+                };
 
-            _carRentalContext.Customers.Add(mewCustomer);
+                _carRentalContext.Customers.Add(customer);
+            }
 
-            await _carRentalContext.SaveChangesAsync();
-
-            return mewCustomer;
+            return customer;
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CarRental.Application.Dto.Models;
-using CarRental.Database.Models;
 using CarRental.Database.Repositories.Interfaces;
 using CarRental.Services.Interfaces;
 

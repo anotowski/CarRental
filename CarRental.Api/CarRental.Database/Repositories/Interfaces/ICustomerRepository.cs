@@ -7,7 +7,7 @@ namespace CarRental.Database.Repositories.Interfaces
     public interface ICustomerRepository
     {
         Task<Customer> GetCustomerByEmail(string customerEmail);
-
-        Task<Customer> CreateCustomer(string email, DateTime birthDate);
+        
+        Task<Customer> GetOrCreateCustomer(string email, DateTime birthDate);
     }
 }
