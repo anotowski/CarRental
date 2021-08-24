@@ -21,6 +21,13 @@ namespace CarRental.Database.Repositories
                 .FirstOrDefaultAsync(x => x.Email.Equals(customerEmail));
         }
 
+
+        public async Task CreateCustomer(Customer customer)
+        {
+             _carRentalContext.Customers.Add(customer);
+             await _carRentalContext.SaveChangesAsync();
+        }
+
         public async Task<Customer> GetOrCreateCustomer(string email, DateTime birthDate)
         {
             var customer = await _carRentalContext.Customers

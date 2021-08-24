@@ -3,23 +3,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using CarRental.BusinessLogic.Generators.Interfaces;
 using CarRental.Database.Models;
-using CarRental.Database.Repositories.Interfaces;
 using CarRental.Services.Interfaces;
+using CarRental.Services.Managers.Interfaces;
 
 namespace CarRental.Services
 {
     public class RentService : IRentService
     {
-        private readonly ICarRentalRepository _carRentalRepository;
-        private readonly ICustomerRepository _customerRepository;
+        private readonly ICustomerRetrieveManager _customerRetrieveManager;
+        private readonly ICarRetrieveManager _carRetrieveManager;
+        private readonly IRentalHistoryManager _rentalHistoryManager;
         private readonly IBookingNumberGenerator _bookingNumberGenerator;
 
-        public RentService(ICarRentalRepository carRentalRepository,
-            ICustomerRepository customerRepository,
+        public RentService(ICustomerRetrieveManager customerRetrieveManager,
+            ICarRetrieveManager carRetrieveManager,
+            IRentalHistoryManager rentalHistoryManager,
             IBookingNumberGenerator bookingNumberGenerator)
         {
-            _carRentalRepository = carRentalRepository;
-            _customerRepository = customerRepository;
+            _customerRetrieveManager = customerRetrieveManager;
+            _carRetrieveManager = carRetrieveManager;
+            _rentalHistoryManager = rentalHistoryManager;
             _bookingNumberGenerator = bookingNumberGenerator;
         }
 
@@ -27,19 +30,9 @@ namespace CarRental.Services
         {
             ValidateInputParameters(plateNumber, customerEmail, customerDateOfBirth);
 
-            var car = await _carRentalRepository.GetCarByPlateNumber(plateNumber);
+            var car = await _carRetrieveManager.TryGetCarByPlateNumber(plateNumber);
 
-            if (car == null)
-            {
-                throw new InvalidOperationException($"Couldn't find car with plate number: '{plateNumber}'");
-            }
-
-            if (!car.IsAvailable)
-            {
-                throw new InvalidOperationException($"Given car with plate number: '{plateNumber}' is not available.");
-            }
-
-            var customer = await _customerRepository.GetOrCreateCustomer(customerEmail, customerDateOfBirth);
+            var customer = await _customerRetrieveManager.GetOrCreateCustomer(customerEmail, customerDateOfBirth);
 
             var lastExistingRentalHistory = car.RentalHistories.OrderByDescending(x => x.Id).FirstOrDefault();
 
@@ -54,10 +47,8 @@ namespace CarRental.Services
                 RentEndDate = null
             };
 
-            await _carRentalRepository.AddRentalHistory(rentalHistory);
-            car.IsAvailable = false;
+            await _rentalHistoryManager.RentCar(rentalHistory, car);
 
-            await _carRentalRepository.UpdateCarStatus(car);
             return rentalHistory.BookingNumber;
         }
 

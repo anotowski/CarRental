@@ -11,7 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.Services", "CarRe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.Application.Dto", "CarRental.Application.Dto\CarRental.Application.Dto.csproj", "{61B12151-AEB0-47CF-84FC-414AA916A733}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental.BusinessLogic", "CarRental.BusinessLogic\CarRental.BusinessLogic.csproj", "{7FCFCFF5-B8C5-4A47-BD99-50E55953D0C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.BusinessLogic", "CarRental.BusinessLogic\CarRental.BusinessLogic.csproj", "{7FCFCFF5-B8C5-4A47-BD99-50E55953D0C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionAssets", "_SolutionAssets", "{D8CB17CB-6878-4896-856B-6B6AA2A0A85B}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.md = ReadMe.md
+		RentalCars.pdf = RentalCars.pdf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -44,7 +44,5 @@ namespace CarRental.Api.Controllers
 
             return Ok(rentBookingNumber);
         }
-
-
     }
 }

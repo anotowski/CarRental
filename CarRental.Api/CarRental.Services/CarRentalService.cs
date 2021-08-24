@@ -9,9 +9,9 @@ namespace CarRental.Services
 {
     public class CarRentalService : ICarRentalService
     {
-        private readonly ICarRentalRepository _carRentalRepository;
+        private readonly ICarRepository _carRentalRepository;
 
-        public CarRentalService(ICarRentalRepository carRentalRepository)
+        public CarRentalService(ICarRepository carRentalRepository)
         {
             _carRentalRepository = carRentalRepository;
         }

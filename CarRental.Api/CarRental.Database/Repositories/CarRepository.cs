@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRental.Database.Repositories
 {
-    public class CarRentalRepository : ICarRentalRepository
+    public class CarRepository : ICarRepository
     {
         private readonly CarRentalContext _carRentalContext;
 
-        public CarRentalRepository(CarRentalContext carRentalContext)
+        public CarRepository(CarRentalContext carRentalContext)
         {
             _carRentalContext = carRentalContext;
         }
@@ -26,12 +26,6 @@ namespace CarRental.Database.Repositories
             return _carRentalContext.Cars
                 .Include(x => x.RentalHistories)
                 .FirstOrDefaultAsync(x => x.PlateNumber.Equals(plateNumber));
-        }
-
-        public async Task AddRentalHistory(RentalHistory rentalHistory)
-        {
-            await _carRentalContext.AddAsync(rentalHistory);
-            await _carRentalContext.SaveChangesAsync();
         }
 
         public async Task UpdateCarStatus(Car car)
