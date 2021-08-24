@@ -2,7 +2,7 @@
 
 namespace CarRental.Api.Models.Requests
 {
-    public class RentRequest
+    public class RentCarRequest
     {
         public string CarPlateNumber { get; set; }
 

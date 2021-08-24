@@ -14,14 +14,17 @@ namespace CarRental.Api.Controllers
     {
         private readonly ICarRentalService _carRentalService;
         private readonly IRentService _rentService;
+        private readonly IReturnService _returnService;
         private readonly IMapper _mapper;
 
         public CarRentalController(ICarRentalService carRentalService,
             IRentService rentService,
+            IReturnService returnService,
             IMapper mapper)
         {
             _carRentalService = carRentalService;
             _rentService = rentService;
+            _returnService = returnService;
             _mapper = mapper;
         }
 
@@ -36,13 +39,24 @@ namespace CarRental.Api.Controllers
 
         [HttpPost]
         [Route("rent", Name = "Rent")]
-        public async Task<IActionResult> RentCar([FromBody] RentRequest rentRequest)
+        public async Task<IActionResult> RentCar([FromBody] RentCarRequest rentRequest)
         {
             var rentBookingNumber = await _rentService.RentCar(rentRequest.CarPlateNumber,
                 rentRequest.CustomerEmail,
                 rentRequest.CustomerDateOfBirth);
 
             return Ok(rentBookingNumber);
+        }
+
+        [HttpPost]
+        [Route("return", Name = "Return")]
+        public async Task<IActionResult> ReturnCar([FromBody] ReturnCarRequest returnCarRequest)
+        {
+            var returnCarResponseDto = await _returnService.ReturnCar(returnCarRequest.BookingNumber,
+                returnCarRequest.ReturnDate,
+                returnCarRequest.CurrentMileage);
+
+            return Ok(_mapper.Map<ReturnCarResponse>(returnCarResponseDto));
         }
     }
 }

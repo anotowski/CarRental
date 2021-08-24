@@ -10,6 +10,8 @@ namespace CarRental.Database.Models
 
         public int CarId { get; set; }
 
+        public Car Car;
+
         public string BookingNumber { get; set; }
 
         public DateTime RentStartDate { get; set; }

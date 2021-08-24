@@ -15,7 +15,8 @@ namespace CarRental.Services.Managers
             _customerRepository = customerRepository;
         }
 
-        public async Task<Customer> GetOrCreateCustomer(string email, DateTime birthDate)
+        public async Task<Customer> GetOrCreateCustomer(string email,
+            DateTime birthDate)
         {
             var customer = await _customerRepository.GetCustomerByEmail(email);
 

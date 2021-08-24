@@ -26,7 +26,9 @@ namespace CarRental.Services
             _bookingNumberGenerator = bookingNumberGenerator;
         }
 
-        public async Task<string> RentCar(string plateNumber, string customerEmail, DateTime customerDateOfBirth)
+        public async Task<string> RentCar(string plateNumber, 
+            string customerEmail,
+            DateTime customerDateOfBirth)
         {
             ValidateInputParameters(plateNumber, customerEmail, customerDateOfBirth);
 
@@ -52,7 +54,9 @@ namespace CarRental.Services
             return rentalHistory.BookingNumber;
         }
 
-        private void ValidateInputParameters(string plateNumber, string customerEmail, DateTime customerDateOfBirth)
+        private void ValidateInputParameters(string plateNumber,
+            string customerEmail,
+            DateTime customerDateOfBirth)
         {
             if (string.IsNullOrWhiteSpace(plateNumber))
             {
