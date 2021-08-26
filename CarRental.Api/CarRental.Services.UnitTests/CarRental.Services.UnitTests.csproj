@@ -22,4 +22,8 @@
     <ProjectReference Include="..\CarRental.Test\CarRental.Test.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ReturnServiceTests\" />
+  </ItemGroup>
+
 </Project>
