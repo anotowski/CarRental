@@ -5,6 +5,8 @@ using CarRental.BusinessLogic.Interfaces;
 using CarRental.Database.Repositories;
 using CarRental.Database.Repositories.Interfaces;
 using CarRental.Services;
+using CarRental.Services.Helpers;
+using CarRental.Services.Helpers.Interfaces;
 using CarRental.Services.Interfaces;
 using CarRental.Services.Managers;
 using CarRental.Services.Managers.Interfaces;
@@ -27,6 +29,7 @@ namespace CarRental.Api.DependencyInjection
             services.AddScoped<IRentService, RentService>();
             services.AddScoped<IPaymentCalculatorFactory, PaymentCalculatorFactory>();
             services.AddScoped<IReturnService, ReturnService>();
+            services.AddScoped<IRentalHistoryPaymentCalculator, RentalHistoryPaymentCalculator>();
 
             return services;
         }

@@ -19,7 +19,7 @@ namespace CarRental.BusinessLogic.UnitTests.Generators.BookingNumberGeneratorTes
         {
             // Arrange
             var plateNumber = _fixture.Create<string>();
-            var expectedResult = $"{plateNumber}/{DateTime.UtcNow:dd-MM-yyyy-hh-mm}";
+            var expectedResult = $"{plateNumber.ToLower()}/{DateTime.UtcNow:dd-MM-yyyy-hh-mm}";
 
             var generator = _fixture.Create<BookingNumberGenerator>();
 

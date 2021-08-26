@@ -7,7 +7,7 @@ namespace CarRental.Services.Managers.Interfaces
     {
         Task<RentalHistory> GetRentalHistoryByBookingNumber(string bookingNumber);
 
-        Task RentCar(RentalHistory rentalHistory, Car car);
+        Task RentCar(RentalHistory rentalHistory);
 
         Task ReturnCar(RentalHistory rentalHistory);
     }

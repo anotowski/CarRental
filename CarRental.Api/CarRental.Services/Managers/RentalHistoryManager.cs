@@ -31,18 +31,19 @@ namespace CarRental.Services.Managers
             return rentalHistory;
         }
 
-        public async Task RentCar(RentalHistory rentalHistory,
-            Car car)
+        public async Task RentCar(RentalHistory rentalHistory)
         {
             await _rentalHistoryRepository.AddRentalHistory(rentalHistory);
 
-            car.IsAvailable = false;
-            await _carRepository.UpdateCarStatus(car);
+            rentalHistory.Car.IsAvailable = false;
+            await _carRepository.UpdateCarStatus(rentalHistory.Car);
         }
 
         public async Task ReturnCar(RentalHistory rentalHistory)
         {
             await _rentalHistoryRepository.UpdateRentalHistory(rentalHistory);
+
+            rentalHistory.Car.IsAvailable = true;
             await _carRepository.UpdateCarStatus(rentalHistory.Car);
         }
     }

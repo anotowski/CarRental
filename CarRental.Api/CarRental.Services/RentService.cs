@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using CarRental.BusinessLogic.Generators.Interfaces;
 using CarRental.Database.Models;
@@ -36,20 +35,19 @@ namespace CarRental.Services
 
             var customer = await _customerRetrieveManager.GetOrCreateCustomer(customerEmail, customerDateOfBirth);
 
-            var lastExistingRentalHistory = car.RentalHistories.OrderByDescending(x => x.Id).FirstOrDefault();
-
             var rentalHistory = new RentalHistory()
             {
                 BookingNumber = _bookingNumberGenerator.Generate(plateNumber),
                 CarId = car.Id,
                 Customer = customer,
-                MileageOnRentalStart = lastExistingRentalHistory?.MileageOnRentalEnd ?? 1,
+                MileageOnRentalStart = car.CurrentMileage,
                 MileageOnRentalEnd = null,
                 RentStartDate = DateTime.UtcNow,
-                RentEndDate = null
+                RentEndDate = null,
+                Car = car
             };
 
-            await _rentalHistoryManager.RentCar(rentalHistory, car);
+            await _rentalHistoryManager.RentCar(rentalHistory);
 
             return rentalHistory.BookingNumber;
         }
@@ -68,7 +66,7 @@ namespace CarRental.Services
                 throw new ArgumentNullException(nameof(customerEmail));
             }
 
-            if (customerDateOfBirth < DateTime.UtcNow.AddYears(-99) || customerDateOfBirth > DateTime.UtcNow)
+            if (customerDateOfBirth < DateTime.UtcNow.AddYears(-99) || customerDateOfBirth > DateTime.UtcNow.AddYears(-16))
             {
                 throw new InvalidOperationException($"Given customer date of birth '{customerDateOfBirth}' is out of range.");
             }
