@@ -46,6 +46,9 @@ namespace CarRental.Services
             rentalHistory.MileageOnRentalEnd = currentCarMileage;
             rentalHistory.RentEndDate = dateOfReturn;
             rentalHistory.Car.IsAvailable = true; // ?
+            rentalHistory.Car.CurrentMileage = currentCarMileage;
+
+            await _rentalHistoryManager.ReturnCar(rentalHistory);
 
             return new ReturnCarResponseDto()
             {

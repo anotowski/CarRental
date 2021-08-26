@@ -10,6 +10,7 @@ namespace CarRental.Api.Profiles
         public MappingProfile()
         {
             CreateMap<CarInformationAsyncDto, CarInformationResponse>();
+            CreateMap<ReturnCarResponseDto, ReturnCarResponse>();
         }
     }
 }

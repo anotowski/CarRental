@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarRental.Database.Models
 {
@@ -9,8 +10,6 @@ namespace CarRental.Database.Models
         public int Id { get; set; }
 
         public int CarId { get; set; }
-
-        public Car Car;
 
         public string BookingNumber { get; set; }
 
@@ -23,5 +22,9 @@ namespace CarRental.Database.Models
         public int? MileageOnRentalEnd { get; set; }
 
         public Customer Customer { get; set; }
+
+        [ForeignKey(nameof(CarId))]
+        [InverseProperty("RentalHistories")]
+        public virtual Car Car { get; set; }
     }
 }
